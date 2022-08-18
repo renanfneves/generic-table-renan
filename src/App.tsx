@@ -1,26 +1,26 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from "react";
 
-function App() {
+import Table from "./components/table/Table";
+
+import useRandomUser from "./hooks/useRandomUser";
+
+import "./styles.css";
+
+export default function App() {
+  const { data, headers, fetchData, loading } = useRandomUser();
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
+
+  if(loading) {
+    return <div>loading...</div>
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1 className="Title">Our table</h1>
+      <Table headers={headers} data={data} /> 
     </div>
   );
 }
-
-export default App;
